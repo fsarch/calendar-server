@@ -1,0 +1,48 @@
+{
+  "name": "calendar-server",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Calendar and Event Management Microservice",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "fsarch-server build",
+    "start": "fsarch-server start",
+    "start:dev": "ts-node src/main.ts",
+    "start:prod": "node dist/main.js",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "typeorm": "node --loader ts-node/esm ./node_modules/typeorm/cli.js",
+    "migration:create": "npm run typeorm migration:create ./src/database/migrations/$npm_config_name",
+    "migration:run": "npm run typeorm migration:run",
+    "migration:revert": "npm run typeorm migration:revert",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@fsarch/server": "^0.2.4",
+    "@nestjs/common": "^12.0.1",
+    "@nestjs/swagger": "^12.0.1",
+    "@nestjs/typeorm": "^12.0.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "luxon": "^3.7.2",
+    "pg": "^8.22.0",
+    "reflect-metadata": "^0.2.0",
+    "rrule": "^2.8.1",
+    "typeorm": "^1.1.0"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^12.0.1",
+    "@types/luxon": "^3.7.5",
+    "@types/node": "^24.0.0",
+    "@vitest/coverage-v8": "^4.0.0",
+    "eslint": "^10.0.0",
+    "prettier": "^3.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3",
+    "vitest": "^4.0.0"
+  }
+}
