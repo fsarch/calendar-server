@@ -1,21 +1,17 @@
 import { ValidationPipe } from '@nestjs/common';
 import { FsArchAppBuilder } from '@fsarch/server';
-import { AppModule } from './app.module.js';
-import { DATABASE_OPTIONS } from './database/index.js';
+import { descriptor } from './lib/index.js';
 
 async function bootstrap() {
-  const app = await new FsArchAppBuilder(AppModule, {
+  const app = await new FsArchAppBuilder(descriptor.module.register(), {
     name: 'Calendar Server',
     version: '1.0.0',
   })
-    .addSwagger({
-      title: 'Calendar Server API',
-      description: 'Calendar and Event Management Microservice',
-      version: '1.0',
-    })
+    .addSwagger(descriptor.swagger)
     .enableAuth()
+    .enableUac(descriptor.uac.roles)
     .enableSoftDeletion()
-    .setDatabase(DATABASE_OPTIONS)
+    .setDatabase({ entities: descriptor.entities, migrations: descriptor.migrations })
     .build();
 
   // Global validation pipe (not set up by FsArchAppBuilder itself)
